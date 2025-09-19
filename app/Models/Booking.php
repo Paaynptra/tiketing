@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Booking extends Model
+{
+    /** @use HasFactory<\Database\Factories\BookingFactory> */
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'ticket_id',
+        'visit_date',
+        'quantity',
+        'total_amount',
+        'status',
+        'booking_code',
+        'notes',
+    ];
+
+    protected $casts = [
+        'visit_date' => 'date',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class);
+    }
+
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
+    }
+}

@@ -28,6 +28,11 @@
                                 @if (Auth::user()->role === 'admin')
                                     <a href="{{ route('admin.dashboard') }}" class="text-sm text-warm-700 hover:text-warm-900 focus:outline-none focus:ring-2 focus:ring-brand-accent-500 rounded">Dashboard</a>
                                 @endif
+                                <!-- Tombol Logout -->
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-warm-300 text-warm-800 rounded-md hover:bg-warm-50 focus:outline-none focus:ring-2 focus:ring-brand-accent-500">Logout</button>
+                                </form>
                             @else
                                 <a href="{{ route('login') }}" class="inline-flex items-center px-4 py-2 border border-warm-300 text-warm-800 rounded-md hover:bg-warm-50 focus:outline-none focus:ring-2 focus:ring-brand-accent-500">{{ __('home.login') }}</a>
                             @endauth
@@ -103,11 +108,11 @@
 
                 <!-- Cards with modal (Stories) -->
                 <section class="max-w-7xl mx-auto px-4 pb-10"
-                         x-data="{ 
-                            modalOpen: false, 
-                            current: { title: '', img: '', desc: '', full: '' }, 
-                            open(h){ this.current = h; this.modalOpen = true; this.$nextTick(()=>{ this.$refs.modal && this.$refs.modal.focus(); }); }, 
-                            close(){ this.modalOpen = false; this.current = { title: '', img: '', desc: '', full: '' } } 
+                         x-data="{
+                            modalOpen: false,
+                            current: { title: '', img: '', desc: '', full: '' },
+                            open(h){ this.current = h; this.modalOpen = true; this.$nextTick(()=>{ this.$refs.modal && this.$refs.modal.focus(); }); },
+                            close(){ this.modalOpen = false; this.current = { title: '', img: '', desc: '', full: '' } }
                          }"
                          x-effect="document.body.classList.toggle('overflow-hidden', modalOpen)"
                          @keydown.escape.window="close()">
@@ -232,6 +237,45 @@
                         </div>
                     </div>
                 </section>
+                <section class="max-w-7xl mx-auto px-4 pb-20">
+                    <h3 class="font-display text-2xl md:text-3xl text-center text-warm-900 mb-10">Apa Kata Mereka?</h3>
+                    <div class="grid gap-8 md:grid-cols-3">
+                        <div class="bg-white shadow-lg rounded-2xl p-6 ring-1 ring-warm-200">
+                            <div class="flex items-center gap-4">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="w-14 h-14 rounded-full object-cover shadow" />
+                                <div>
+                                    <p class="font-semibold text-warm-900">Ayu</p>
+                                    <p class="text-sm text-warm-600">Pengunjung</p>
+                                </div>
+                            </div>
+                            <p class="mt-4 text-warm-700 leading-relaxed">Pengalaman saya sangat luar biasa, proses pemesanan tiket cepat dan mudah. Tempatnya juga indah sekali.</p>
+                        </div>
+
+                        <div class="bg-white shadow-lg rounded-2xl p-6 ring-1 ring-warm-200">
+                            <div class="flex items-center gap-4">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-14 h-14 rounded-full object-cover shadow" />
+                                <div>
+                                    <p class="font-semibold text-warm-900">Made</p>
+                                    <p class="text-sm text-warm-600">Traveler</p>
+                                </div>
+                            </div>
+                            <p class="mt-4 text-warm-700 leading-relaxed">Sangat puas dengan layanan ini, dari awal sampai akhir terasa profesional. Saya pasti akan kembali lagi.</p>
+                        </div>
+
+                        <div class="bg-white shadow-lg rounded-2xl p-6 ring-1 ring-warm-200">
+                            <div class="flex items-center gap-4">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User" class="w-14 h-14 rounded-full object-cover shadow" />
+                                <div>
+                                    <p class="font-semibold text-warm-900">Dewi</p>
+                                    <p class="text-sm text-warm-600">Wisatawan</p>
+                                </div>
+                            </div>
+                            <p class="mt-4 text-warm-700 leading-relaxed">Tampilan websitenya elegan, mudah digunakan, dan informatif. Sangat membantu dalam merencanakan perjalanan saya.</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
             </main>
         </div>
         <footer class="mt-10 bg-gradient-to-r from-brand-accent-600 to-brand-primary-700 text-white">

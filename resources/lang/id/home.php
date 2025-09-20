@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'packages' => 'Paket',
+    'E-Tiketing' => 'E-Tiketing',
+    'Gallery' => 'Galeri',
     'rules' => 'Etika Kunjungan',
     'contact' => 'Kontak',
     'login' => 'Masuk',

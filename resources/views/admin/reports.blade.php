@@ -4,76 +4,100 @@
     </x-slot>
 
     <div class="py-6 max-w-6xl mx-auto">
-    <h1 class="text-2xl font-semibold mb-4">Laporan Kunjungan</h1>
-    <form method="GET" class="bg-white dark:bg-gray-800 rounded shadow p-4 mb-4 grid grid-cols-1 md:grid-cols-4 gap-3">
-        <div>
-            <label class="block text-sm">Dari</label>
-            <input type="date" name="start_date" value="{{ $start }}" class="w-full border rounded p-2">
-        </div>
-        <div>
-            <label class="block text-sm">Sampai</label>
-            <input type="date" name="end_date" value="{{ $end }}" class="w-full border rounded p-2">
-        </div>
-        <div class="flex items-end">
-            <button class="bg-blue-600 text-white px-4 py-2 rounded">Terapkan</button>
-        </div>
-        <div class="flex items-end">
-            <div class="p-2 bg-gray-50 dark:bg-gray-900 rounded w-full">
-                <div class="text-xs text-gray-500">Ringkasan</div>
-                <div class="flex gap-4 text-sm">
-                    <div>Booking: <strong>{{ $totals['bookings'] }}</strong></div>
-                    <div>Pengunjung: <strong>{{ $totals['visitors'] }}</strong></div>
-                    <div>Pendapatan: <strong>Rp {{ number_format($totals['revenue'], 0, ',', '.') }}</strong></div>
+
+        <!-- Filter Form -->
+        <form method="GET" class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-600 mb-1">Dari</label>
+                <input type="date" name="start_date" value="{{ $start }}"
+                       class="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 rounded-md p-2 text-sm focus:ring-2 focus:ring-indigo-500">
+            </div>
+    <div>
+    <label class="block text-sm font-medium text-gray-600 mb-1">Sampai</label>
+    <input type="date" name="end_date" value="{{ $end }}"
+           class="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 rounded-md p-2 text-sm focus:ring-2 focus:ring-indigo-500">
+
+    <div class="flex justify-end mt-2">
+        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
+            Terapkan
+        </button>
+    </div>
+</div>
+
+            <div class="flex items-end">
+                <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded-lg w-full border border-gray-200 dark:border-gray-700">
+                    <div class="text-xs text-gray-500">Ringkasan</div>
+                    <div class="flex flex-col gap-1 mt-1 text-sm">
+                        <div>Booking: <strong>{{ $totals['bookings'] }}</strong></div>
+                        <div>Pengunjung: <strong>{{ $totals['visitors'] }}</strong></div>
+                        <div>Pendapatan: <strong>Rp {{ number_format($totals['revenue'], 0, ',', '.') }}</strong></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
 
-    @if (session('success'))
-        <div class="mb-4 max-w-6xl mx-auto p-3 bg-green-100 text-green-800 rounded">{{ session('success') }}</div>
-    @endif
+        <!-- Success Alert -->
+        @if (session('success'))
+            <div class="mb-4 max-w-6xl mx-auto p-3 bg-green-100 text-green-800 rounded-md shadow-sm">
+                {{ session('success') }}
+            </div>
+        @endif
 
-    <div class="bg-white dark:bg-gray-800 rounded shadow p-4">
-        <div class="overflow-x-auto">
-            <table class="min-w-full text-sm">
-                <thead>
-                    <tr class="text-left border-b">
-                        <th class="p-2">Tanggal</th>
-                        <th class="p-2">Kode</th>
-                        <th class="p-2">Tiket</th>
-                        <th class="p-2">Qty</th>
-                        <th class="p-2">Total</th>
-                        <th class="p-2">Status</th>
-                        <th class="p-2">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($bookings as $b)
-                        <tr class="border-b">
-                            <td class="p-2">{{ $b->visit_date->format('d M Y') }}</td>
-                            <td class="p-2 font-mono">{{ $b->booking_code }}</td>
-                            <td class="p-2">{{ optional($b->ticket)->name }}</td>
-                            <td class="p-2">{{ $b->quantity }}</td>
-                            <td class="p-2">Rp {{ number_format($b->total_amount, 0, ',', '.') }}</td>
-                            <td class="p-2 capitalize">{{ $b->status }}</td>
-                            <td class="p-2">
-                                <form method="POST" action="{{ route('admin.bookings.status', $b) }}" class="flex items-center gap-2">
-                                    @csrf
-                                    @method('PATCH')
-                                    <select name="status" class="border rounded p-1 text-sm">
-                                        @foreach (['pending','confirmed','cancelled','checked_in'] as $st)
-                                            <option value="{{ $st }}" @selected($b->status === $st)>{{ ucfirst(str_replace('_',' ', $st)) }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button class="bg-indigo-600 text-white px-2 py-1 rounded text-xs">Simpan</button>
-                                </form>
-                            </td>
+        <!-- Data Table -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm">
+                    <thead class="bg-indigo-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 uppercase text-xs font-semibold">
+                        <tr>
+                            <th class="p-3 text-left">Tanggal</th>
+                            <th class="p-3 text-left">Kode</th>
+                            <th class="p-3 text-left">Tiket</th>
+                            <th class="p-3 text-center">Qty</th>
+                            <th class="p-3 text-left">Total</th>
+                            <th class="p-3 text-left">Status</th>
+                            <th class="p-3 text-center">Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                        @foreach ($bookings as $b)
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-900 transition">
+                                <td class="p-3">{{ $b->visit_date->format('d M Y') }}</td>
+                                <td class="p-3 font-mono">{{ $b->booking_code }}</td>
+                                <td class="p-3">{{ optional($b->ticket)->name }}</td>
+                                <td class="p-3 text-center">{{ $b->quantity }}</td>
+                                <td class="p-3">Rp {{ number_format($b->total_amount, 0, ',', '.') }}</td>
+                                <td class="p-3 capitalize">
+                                    <span class="px-2 py-1 rounded text-xs
+                                        @if($b->status === 'confirmed') bg-green-100 text-green-700
+                                        @elseif($b->status === 'pending') bg-yellow-100 text-yellow-700
+                                        @elseif($b->status === 'cancelled') bg-red-100 text-red-700
+                                        @else bg-blue-100 text-blue-700
+                                        @endif">
+                                        {{ str_replace('_', ' ', ucfirst($b->status)) }}
+                                    </span>
+                                </td>
+                                <td class="p-3 text-center">
+                                    <form method="POST" action="{{ route('admin.bookings.status', $b) }}" class="flex items-center justify-center gap-2">
+                                        @csrf
+                                        @method('PATCH')
+                                        <select name="status" class="border-gray-300 dark:border-gray-700 rounded-md p-1 text-xs focus:ring-1 focus:ring-indigo-500">
+                                            @foreach (['pending','confirmed','cancelled','checked_in'] as $st)
+                                                <option value="{{ $st }}" @selected($b->status === $st)>{{ ucfirst(str_replace('_',' ', $st)) }}</option>
+                                            @endforeach
+                                        </select>
+                                        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded text-xs transition">
+                                            Simpan
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+                {{ $bookings->links() }}
+            </div>
         </div>
-        <div class="mt-4">{{ $bookings->links() }}</div>
-    </div>
     </div>
 </x-admin-layout>

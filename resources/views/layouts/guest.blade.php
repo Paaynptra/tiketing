@@ -15,18 +15,24 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-warm-900 antialiased">
-        <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 bg-white text-warm-900 px-3 py-2 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-brand-accent-500">Skip to main content</a>
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-warm-50">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
+  <body class="font-sans text-warm-900 antialiased">
+    <a href="#main"
+       class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 bg-white text-warm-900 px-3 py-2 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-brand-accent-500">
+       Skip to main content
+    </a>
 
-            <main id="main" class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
-            </main>
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gradient-to-br from-green-50 via-green-100 to-green-200">
+        <div>
+            <a href="/">
+                <x-application-logo class="w-20 h-20 fill-current text-green-600" />
+            </a>
         </div>
-    </body>
+
+        <main id="main"
+              class="w-full sm:max-w-md mt-6 px-6 py-6 bg-white shadow-lg overflow-hidden sm:rounded-lg ring-1 ring-green-200">
+            {{ $slot }}
+        </main>
+    </div>
+</body>
+
 </html>

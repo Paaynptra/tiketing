@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Ticket;
 use App\Models\Visitor;
+use App\Services\Qr\QrService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -62,5 +63,17 @@ class BookingController extends Controller
             ->paginate(10);
 
         return view('booking.history', compact('bookings'));
+    }
+
+
+    public function showQrCode(string $booking_code, QrService $qr)
+    {
+        $booking = Booking::where('booking_code', $booking_code)->firstOrFail();
+
+        if ($booking->status !== 'confirmed') {
+            abort(404);
+        }
+
+        return view('booking.show_qrcode', compact('booking', 'qr'));
     }
 }

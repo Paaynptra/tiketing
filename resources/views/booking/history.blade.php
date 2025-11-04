@@ -19,6 +19,7 @@
                         <th class="p-2">Jumlah</th>
                         <th class="p-2">Total</th>
                         <th class="p-2">Status</th>
+                        <th class="p-2">QR Code</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,9 +31,14 @@
                             <td class="p-2">{{ $booking->quantity }}</td>
                             <td class="p-2">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</td>
                             <td class="p-2 capitalize">{{ $booking->status }}</td>
+                            <td class="p-2">
+                                @if ($booking->status == 'confirmed')
+                                    <a href="{{ route('booking.show_qrcode', ['booking_code' => $booking->booking_code]) }}" class="text-blue-600">Detail QR Code</a>
+                                @endif
+                            </td>
                         </tr>
                     @empty
-                        <tr><td colspan="6" class="p-4 text-center text-gray-500">Belum ada pemesanan.</td></tr>
+                        <tr><td colspan="7" class="p-4 text-center text-gray-500">Belum ada pemesanan.</td></tr>
                     @endforelse
                 </tbody>
             </table>

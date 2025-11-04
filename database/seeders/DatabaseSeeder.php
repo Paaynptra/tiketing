@@ -35,6 +35,17 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // Petugas user
+        User::updateOrCreate(
+            ['email' => 'petugas@lempuyang.test'],
+            [
+                'name' => 'Petugas Lapangan',
+                'password' => Hash::make('password'),
+                'role' => 'petugas',
+                'email_verified_at' => now(),
+            ]
+        );
+
         // Tickets
         $reg = Ticket::updateOrCreate(['name' => 'Reguler'], [
             'description' => 'Tiket reguler kunjungan Pura Lempuyang',

@@ -24,6 +24,10 @@
                                 <x-dropdown-link :href="route('admin.dashboard')">
                                     {{ __('Admin') }}
                                 </x-dropdown-link>
+                            @elseif (Auth::user()->role === 'petugas')
+                                <x-dropdown-link :href="route('petugas.dashboard')">
+                                    {{ __('Petugas') }}
+                                </x-dropdown-link>
                             @endif
                             <x-dropdown-link :href="route('booking.history')">
                                 {{ __('History') }}

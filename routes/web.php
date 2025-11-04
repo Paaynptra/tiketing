@@ -59,6 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
     Route::get('/booking/history', [BookingController::class, 'history'])->name('booking.history');
 
+    Route::get('/booking/{booking_code}/show-qrcode', [BookingController::class, 'showQrCode'])->name('booking.show_qrcode');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -76,3 +78,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 });
 
 require __DIR__.'/auth.php';
+
+// Petugas routes
+Route::middleware(['auth', 'petugas'])->prefix('petugas')->name('petugas.')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Petugas\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/bookings', [\App\Http\Controllers\Petugas\BookingController::class, 'index'])->name('bookings.index');
+    Route::patch('/bookings/{booking}/status', [\App\Http\Controllers\Petugas\BookingController::class, 'updateStatus'])->name('bookings.status');
+});

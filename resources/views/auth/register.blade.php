@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="flex items-center justify-center min-h-screen bg-gray-50 px-4">
-        <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-6 border border-green-500">
+        <div class="w-full max-w-2xl lg:max-w-3xl rounded-lg p-6 border border-green-500">
 
             <!-- Judul -->
             <div class="text-center mb-6">

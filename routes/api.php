@@ -1,8 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/verify-booking', [\App\Http\Controllers\Api\BookingController::class, 'verify']);
+});
+
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
 // Example protected route with Sanctum for mobile checkin app
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/checkin', function (Request $request) {

@@ -20,15 +20,49 @@
     <script src="https://unpkg.com/html5-qrcode"></script>
     <script>
         function onScanSuccess(decodedText, decodedResult) {
-            // handle the scanned code as you like, for example:
             console.log(`Code matched = ${decodedText}`, decodedResult);
-            document.getElementById('qr-reader-results').innerText = decodedText;
+
+            let resultsDiv = document.getElementById('qr-reader-results');
+            resultsDiv.innerHTML = 'Verifying...';
+
+            fetch('/api/verify-booking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ qr_data: decodedText })
+            })
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                if (data.error) {
+                    resultsDiv.innerHTML = `<div class="text-red-500">Error: ${data.error}</div>`;
+                } else {
+                    resultsDiv.innerHTML = `
+                        <div class="text-green-500">Booking Verified!</div>
+                        <div><strong>Booking Code:</strong> ${data.booking_code}</div>
+                        <div><strong>Ticket:</strong> ${data.ticket.name}</div>
+                        <div><strong>Name:</strong> ${data.user.name}</div>
+                        <div><strong>Visit Date:</strong> ${data.visit_date}</div>
+                        <div><strong>Quantity:</strong> ${data.quantity}</div>
+                        <div><strong>Status:</strong> ${data.status}</div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultsDiv.innerHTML = `<div class="text-red-500">An error occurred.</div>`;
+            });
         }
 
         function onScanFailure(error) {
             // handle scan failure, usually better to ignore and keep scanning.
             // for example:
-            console.warn(`Code scan error = ${error}`);
+            // console.warn(`Code scan error = ${error}`);
         }
 
         let html5QrcodeScanner = new Html5QrcodeScanner(

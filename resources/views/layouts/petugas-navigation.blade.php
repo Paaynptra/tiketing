@@ -2,16 +2,16 @@
     <div class="p-4 font-bold text-lg border-b border-white/10">
         E-Tiketing Lempuyang
     </div>
-    <nav class="mt-4 flex flex-col space-y-2 px-4">
-        <a href="{{ route('petugas.dashboard') }}"
-           class="px-3 py-2 rounded hover:bg-teal-600/60 {{ request()->routeIs('petugas.dashboard') ? 'bg-teal-600/80' : '' }}">
-           Verifikasi Tiket
-        </a>
-        <a href="{{ route('petugas.bookings.index') }}"
-           class="px-3 py-2 rounded hover:bg-teal-600/60 {{ request()->routeIs('petugas.bookings.*') ? 'bg-teal-600/80' : '' }}">
-           Manajemen Pesanan
-        </a>
-    </nav>
+        <nav class="mt-4 flex flex-col space-y-2 px-4">
+            <a href="{{ route('petugas.dashboard') }}"
+               class="px-3 py-2 rounded hover:bg-teal-600/60 {{ request()->routeIs('petugas.dashboard') ? 'bg-teal-600/80' : '' }}">
+               Verifikasi Tiket
+            </a>
+            <a href="{{ route('petugas.bookings.index') }}"
+               class="px-3 py-2 rounded hover:bg-teal-600/60 {{ request()->routeIs('petugas.bookings.*') ? 'bg-teal-600/80' : '' }}">
+               Manajemen Pesanan
+            </a>
+        </nav>
 
     {{-- Bagian bawah sidebar --}}
     <div class="absolute bottom-0 w-64 p-4 border-t border-white/10">

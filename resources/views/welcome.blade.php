@@ -13,33 +13,7 @@
     <body class="font-sans bg-warm-50 text-warm-900">
         <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 bg-white text-warm-900 px-3 py-2 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-brand-accent-500">Skip to main content</a>
         <div class="relative min-h-screen">
-            <header class="bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-warm-200">
-                <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-                    <div class="text-lg font-display font-semibold text-brand-primary-700">{{ config('app.name', 'E-Tiketing') }}</div>
-                    <nav class="hidden md:flex gap-6 text-sm">
-                        <a class="text-warm-700 hover:text-warm-900 focus:outline-none focus:ring-2 focus:ring-brand-accent-500 rounded" href="{{ route('packages') }}">{{ __('home.packages') }}</a>
-                        <a class="text-warm-700 hover:text-warm-900 focus:outline-none focus:ring-2 focus:ring-brand-accent-500 rounded" href="#rules">{{ __('home.rules') }}</a>
-                        <a class="text-warm-700 hover:text-warm-900 focus:outline-none focus:ring-2 focus:ring-brand-accent-500 rounded" href="#contact">{{ __('home.contact') }}</a>
-                    </nav>
-                    <div class="flex items-center gap-3">
-                        <a href="{{ route('booking.index') }}" class="inline-flex items-center px-4 py-2 bg-brand-primary-600 text-white rounded-md shadow hover:bg-brand-primary-700 focus:outline-none focus:ring-2 focus:ring-brand-accent-500">{{ __('home.cta') }}</a>
-                        @if (Route::has('login'))
-                            @auth
-                                @if (Auth::user()->role === 'admin')
-                                    <a href="{{ route('admin.dashboard') }}" class="text-sm text-warm-700 hover:text-warm-900 focus:outline-none focus:ring-2 focus:ring-brand-accent-500 rounded">Dashboard</a>
-                                @endif
-                                <!-- Tombol Logout -->
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-warm-300 text-warm-800 rounded-md hover:bg-warm-50 focus:outline-none focus:ring-2 focus:ring-brand-accent-500">Logout</button>
-                                </form>
-                            @else
-                                <a href="{{ route('login') }}" class="inline-flex items-center px-4 py-2 border border-warm-300 text-warm-800 rounded-md hover:bg-warm-50 focus:outline-none focus:ring-2 focus:ring-brand-accent-500">{{ __('home.login') }}</a>
-                            @endauth
-                        @endif
-                    </div>
-                </div>
-            </header>
+        @include('layouts.main-navigation')
 
             <main id="main">
                 <!-- Hero -->

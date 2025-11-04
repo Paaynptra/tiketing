@@ -18,7 +18,7 @@
     <body class="font-sans antialiased bg-warm-50 text-warm-900">
         <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 bg-white text-warm-900 px-3 py-2 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-brand-accent-500">Skip to main content</a>
         <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+            @include('layouts.main-navigation')
 
             <!-- Page Heading -->
             @isset($header)
